@@ -11,6 +11,7 @@ module.exports.logConcertData = function(data) {
     };
 
     console.log(
+      '\n',
       colors.red.bold('Venue : '),
       colors.white.bold(concert.venue) + '\n',
       colors.red.bold('Address : '),
@@ -38,7 +39,9 @@ module.exports.logSongData = function(songs) {
     link: songs[0].href,
     album: songs[0].album.name
   };
+
   console.log(
+    '\n',
     colors.white.bold('Artists : '),
     colors.red(response.artists),
     '\n',
@@ -50,6 +53,44 @@ module.exports.logSongData = function(songs) {
     '\n',
     colors.white.bold('Link : '),
     colors.red(response.link),
+    '\n\n',
+  );
+}
+
+module.exports.logMovieData = function (movie) {
+  const response = {
+    title: movie.Title,
+    year: movie.Year,
+    imdbRating: movie.imdbRating,
+    rottenRating: movie.Ratings[0].value,
+    country: movie.Country,
+    language: movie.Language,
+    plot: movie.Plot,
+    actors: movie.Actors
+  };
+
+  console.log(
+    '\n',
+    colors.white.bold('Movie Title : '),
+    colors.red(response.title),
+    '\n',
+    colors.white.bold('Year : '),
+    colors.red(response.year),
+    '\n',
+    colors.white.bold('IMDB Rating : '),
+    colors.red(response.imdbRating),
+    '\n',
+    colors.white.bold('Rotten Tomatoes : '),
+    colors.red(response.rottenRating),
+    '\n\n',
+    colors.white.bold('Country : '),
+    colors.red(response.country),
+    '\n\n',
+    colors.white.bold('Plot : '),
+    colors.red(response.plot),
+    '\n\n',
+    colors.white.bold('Actors : '),
+    colors.red(response.actors),
     '\n\n',
   );
 }
