@@ -24,34 +24,32 @@ module.exports.logConcertData = function(data) {
 
 module.exports.logSongData = function(songs) {
   let response = {};
+  let artists = [];
 
-  songs.forEach(function(song) {
-    let artists = [];
-    if(song.artists.length > 0) {
-      song.artists.forEach(function(artist) {
-        artists.push(artist.name);
-      });
-    }
+  if(songs[0].artists.length > 0) {
+    songs[0].artists.forEach(function(artist) {
+      artists.push(artist.name);
+    });
+  }
 
-    response = {
-      artists: artists.join(', '),
-      name: song.name,
-      link: song.href,
-      album: song.album.name
-    };
-    console.log(
-      colors.white.bold('Artists : '),
-      colors.red(response.artists),
-      '\n',
-      colors.white.bold('Song Name : '),
-      colors.red(response.name),
-      '\n',
-      colors.white.bold('Album : '),
-      colors.red(response.album),
-      '\n',
-      colors.white.bold('Link : '),
-      colors.red(response.link),
-      '\n\n',
-    );
-  });
+  response = {
+    artists: artists.join(', '),
+    name: songs[0].name,
+    link: songs[0].href,
+    album: songs[0].album.name
+  };
+  console.log(
+    colors.white.bold('Artists : '),
+    colors.red(response.artists),
+    '\n',
+    colors.white.bold('Song Name : '),
+    colors.red(response.name),
+    '\n',
+    colors.white.bold('Album : '),
+    colors.red(response.album),
+    '\n',
+    colors.white.bold('Link : '),
+    colors.red(response.link),
+    '\n\n',
+  );
 }
