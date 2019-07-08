@@ -4,6 +4,7 @@ const Spotify = require('node-spotify-api');
 // const Moment = require('moment');
 const keys = require('./keys.js');
 const logConcertData = require('./utils.js').logConcertData;
+const logSongData = require('./utils.js').logSongData;
 const spotify = new Spotify(keys.spotify);
 
 module.exports.concertThis = function() {
@@ -16,11 +17,23 @@ module.exports.concertThis = function() {
 };
 
 module.exports.spotifyThisSong = function() {
-  
+  let query = process.argv[1] != undefined ? process.argv[1] : 'The Sign Ace of Base';
+
+  spotify.search({ type: 'track', query: query, limit: 5})
+  .then(function(data) {
+    if(data.tracks.total === 0) {
+      console.error('No Results Found. Please try again!');
+      return;
+    }
+
+    logSongData(data.tracks.items);
+  }, function(error) {
+    console.error('error', error);
+  });
 };
 
 module.exports.movieThis = function() {
-  console.log('fuckin movie')
+  console.log(' movie')
 };
 
 module.exports.doWhatItSays = function() {
