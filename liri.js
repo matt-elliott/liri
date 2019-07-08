@@ -7,6 +7,7 @@ const logConcertData = require('./utils.js').logConcertData;
 const logSongData = require('./utils.js').logSongData;
 const spotify = new Spotify(keys.spotify);
 
+
 module.exports.concertThis = function() {
   let url = `https://rest.bandsintown.com/artists/${process.argv[1]}/events?app_id=codingbootcamp`;
 
@@ -16,10 +17,13 @@ module.exports.concertThis = function() {
   });
 };
 
+// TODO #1: make default query for "ace of base"
+// TODO #2: make pagination
 module.exports.spotifyThisSong = function() {
   let query = process.argv[1] != undefined ? process.argv[1] : 'The Sign Ace of Base';
+  let page = process.argv[2] != undefined ? process.argv[2] : '0';
 
-  spotify.search({ type: 'track', query: query, limit: 5})
+  spotify.search({ type: 'track', query: query, limit: 5, offset: page })
   .then(function(data) {
     if(data.tracks.total === 0) {
       console.error('No Results Found. Please try again!');
