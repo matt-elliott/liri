@@ -1,3 +1,4 @@
+// TODO : DEGLOBALIZE!!!! \\
 require("dotenv").config();
 const fs = require("fs");
 const axios = require("axios");
@@ -9,6 +10,7 @@ const logSongData = utils.logSongData;
 const logMovieData = utils.logMovieData;
 const Spotify = require("node-spotify-api");
 const spotify = new Spotify(keys.spotify);
+// ! Do we really need to define keys like this or are we just making constants for fun now? 
 const omdb = keys.OMDB_KEY;
 const colors = require("colors/safe");
 
@@ -29,6 +31,7 @@ function concertThis(artist) {
       }
     })
     .catch(function(error) {
+      //TODO : Make this a function called errorHandler 
       if(!error.response) {
         console.error(colors.bgRed.white.bold(error));
       } else {
@@ -43,7 +46,8 @@ function concertThis(artist) {
 function spotifyThisSong(song) {
   let query = song != undefined ? song : "The Sign Ace of Base";
 
-  spotify.search({ type: "track", query: query, limit: 1 })
+  spotify
+  .search({ type: "track", query: query, limit: 1 })
   .then(
     function(data) {
       if (data.tracks.total === 0) {
@@ -54,6 +58,7 @@ function spotifyThisSong(song) {
       logSongData(data.tracks.items);
     })
     .catch(function(error) {
+      //TODO : Use errorHandler
       console.log(
         colors.bgRed.white.bold(error)
       );
@@ -72,7 +77,7 @@ function movieThis(movie) {
     .then(function(response) {
       let movie = response.data;
 
-      //TODO : Ask Zane why I need to do this, should the error be caught?
+      //TODO : Ask Zane why I need to do this, shouldnt these errors be caught?
       if(movie.Title === undefined) {
         throw 'No Movies Matched. Please sober up and try again later.'
       } else if(movie.data != undefined) {
@@ -82,6 +87,7 @@ function movieThis(movie) {
       logMovieData(movie);
     })
     .catch(function(error) {
+      //TODO: Use errorHandler
       console.log(colors.bgRed.white.bold(error));
     })
     .finally(function() {
@@ -90,6 +96,7 @@ function movieThis(movie) {
 }
 
 function doWhatItSays() {
+  //TODO : try to use then/catch program flow with fs.readFile
   fs.readFile("./random.txt", "utf-8", function(error, data) {
     if (error) throw error;
     let splitData = data.split(",");

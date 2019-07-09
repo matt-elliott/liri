@@ -36,6 +36,7 @@ module.exports.logSongData = function(songs) {
   response = {
     artists: artists.join(', '),
     name: songs[0].name,
+    //TODO: Make link clickable from CL?
     link: songs[0].href,
     album: songs[0].album.name
   };
