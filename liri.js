@@ -15,12 +15,12 @@ const colors = require("colors/safe");
 function concertThis(artist) {
   let url = `https://rest.bandsintown.com/artists/${artist}/events?app_id=codingbootcamp`;
 
-  axios
-    .get(url)
-    .then(function(response) {
+  axios.get(url).then(function(response) {
       let data = response.data;
 
-      if (data.length === 0) {
+      if (data.indexOf('Not found') > -1) {
+        throw 'Wanna try and type like a real person?';
+      } else if(data.length === 0) {
         throw `No Results! I Heard ${artist} has \n ${colors.zebra(
           "R E T I R E D!"
         )}`;
@@ -29,7 +29,11 @@ function concertThis(artist) {
       }
     })
     .catch(function(error) {
-      console.error(colors.bgRed.white.bold(error));
+      if(!error.response) {
+        console.error(colors.bgRed.white.bold(error));
+      } else {
+        console.error(colors.bgRed.white.bold(error.response.data));
+      }
     })
     .finally(function() {
       output(colors.bgGreen.white.bold("√√ complete"));
