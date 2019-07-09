@@ -74,7 +74,7 @@ function movieThis(movie) {
 
       logMovieData(movie);
     })
-    .catch(errorHandler(error))
+    .catch(utils.errorHandler)
     .finally(function() {
       output(colors.bgWhite.black.bold('Done.'))
     });
