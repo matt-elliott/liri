@@ -70,12 +70,14 @@ function movieThis(movie) {
   axios
     .get(url)
     .then(function(response) {
-      //TODO : Ask Zane why I need to do this, should the error be caught?
-      if(response.data.Error) {
-        throw response.data.Error;
-      }
-
       let movie = response.data;
+
+      //TODO : Ask Zane why I need to do this, should the error be caught?
+      if(movie.Title === undefined) {
+        throw 'No Movies Matched. Please sober up and try again later.'
+      } else if(movie.data != undefined) {
+        throw move.data.Error
+      }
 
       logMovieData(movie);
     })

@@ -61,8 +61,8 @@ module.exports.logMovieData = function (movie) {
   const response = {
     title: movie.Title,
     year: movie.Year,
-    imdbRating: movie.Ratings[0].Value,
-    rottenRating: movie.Ratings[1].Value,
+    imdbRating: movie.Ratings != undefined ? movie.Ratings[0].Value : 'N/A',
+    rottenRating: movie.Ratings != undefined ? movie.Ratings[1].Value: 'N/A',
     country: movie.Country,
     language: movie.Language,
     plot: movie.Plot,
