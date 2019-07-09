@@ -9,6 +9,7 @@ const logMovieData = utils.logMovieData;
 const Spotify = require('node-spotify-api');
 const spotify = new Spotify(keys.spotify);
 const omdb = keys.OMDB_KEY;
+const colors = require('colors/safe');
 
 
 function concertThis(artist) {
@@ -16,8 +17,21 @@ function concertThis(artist) {
 
   axios.get(url).then(function (response) {
     let data = response.data;
-    logConcertData(data);
-  });
+    console.log(colors.white.bold('data19: ', data.length));
+    
+    if (data.length === 0) {
+
+      throw `No Results! I Heard ${artist} has \n ${colors.zebra('R E T I R E D!')}`;
+    } else {
+      logConcertData(data);
+    }
+  })
+    .catch(function (error) {
+      console.error(colors.bgRed.white.bold(error));
+    })
+    .finally(function () {
+      console.log(colors.bgGreen.white.bold('√√ complete'));
+    });
 };
 
 function spotifyThisSong(song) {
@@ -55,7 +69,6 @@ function doWhatItSays() {
     let param = splitData[1];
 
     router(command, param);
-    
   });
 }
 

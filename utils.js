@@ -1,7 +1,7 @@
 const moment = require('moment');
 const colors = require('colors/safe');
 
-module.exports.logConcertData = function(data) {
+module.exports.logConcertData = function (data) {
   data.forEach(function(datum) {
     var concert = {
       venue: datum.venue.name.trim(),
