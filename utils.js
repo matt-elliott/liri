@@ -36,7 +36,7 @@ module.exports.logSongData = function(songs) {
   response = {
     artists: artists.join(', '),
     name: songs[0].name,
-    //TODO: Make link clickable from CL? Without special keycombo?
+    //TODO: Make link clickable from CL? Without special keycombo? Try out: https://www.npmjs.com/package/terminal-link
     link: songs[0].preview_url,
     album: songs[0].album.name
   };
