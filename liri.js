@@ -59,19 +59,32 @@ function spotifyThisSong(song) {
       );
     })
     .finally(function() {
-      console.log(colors.bgGreen.white.bold('End of File.\nMCP Out.'));
+      output(colors.bgGreen.white.bold('End of File.\nMCP Out.'));
     })
 }
 
-// TODO: Add Mr Nobody as default
 function movieThis(movie) {
-  let url = `http://www.omdbapi.com/?apikey=${omdb}&t=${movie}&type=movie`;
+  let query = movie != undefined ? movie : 'Mr. Nobody';
+  let url = `http://www.omdbapi.com/?apikey=${omdb}&t=${query}&type=movie`;
 
-  axios.get(url).then(function(response) {
-    let movie = response.data;
+  axios
+    .get(url)
+    .then(function(response) {
+      //TODO : Ask Zane why I need to do this, should the error be caught?
+      if(response.data.Error) {
+        throw response.data.Error;
+      }
 
-    logMovieData(movie);
-  });
+      let movie = response.data;
+
+      logMovieData(movie);
+    })
+    .catch(function(error) {
+      console.log(colors.bgRed.white.bold(error));
+    })
+    .finally(function() {
+      output(colors.bgWhite.black.bold('Done.'))
+    });
 }
 
 function doWhatItSays() {
