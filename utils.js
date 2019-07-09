@@ -94,3 +94,8 @@ module.exports.logMovieData = function (movie) {
     '\n\n',
   );
 }
+module.exports.output = function(message) {
+  if(process.env.ENV_DEBUG === 'true') {
+    console.log(message);
+  }
+}
