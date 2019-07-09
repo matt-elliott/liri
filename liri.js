@@ -43,19 +43,24 @@ function concertThis(artist) {
 function spotifyThisSong(song) {
   let query = song != undefined ? song : "The Sign Ace of Base";
 
-  spotify.search({ type: "track", query: query, limit: 1 }).then(
+  spotify.search({ type: "track", query: query, limit: 1 })
+  .then(
     function(data) {
       if (data.tracks.total === 0) {
-        console.error("No Results Found. Please try again!");
+        throw "No Results Found. Please try again!";
         return;
       }
 
       logSongData(data.tracks.items);
-    },
-    function(error) {
-      console.error("error", error);
-    }
-  );
+    })
+    .catch(function(error) {
+      console.log(
+        colors.bgRed.white.bold(error)
+      );
+    })
+    .finally(function() {
+      console.log(colors.bgGreen.white.bold('End of File.\nMCP Out.'));
+    })
 }
 
 // TODO: Add Mr Nobody as default
