@@ -30,14 +30,7 @@ function concertThis(artist) {
         logConcertData(data);
       }
     })
-    .catch(function(error) {
-      //TODO : Make this a function called errorHandler 
-      if(!error.response) {
-        console.error(colors.bgRed.white.bold(error));
-      } else {
-        console.error(colors.bgRed.white.bold(error.response.data));
-      }
-    })
+    .catch(utils.errorHandler)
     .finally(function() {
       output(colors.bgGreen.white.bold("√√ complete"));
     });
@@ -57,12 +50,7 @@ function spotifyThisSong(song) {
 
       logSongData(data.tracks.items);
     })
-    .catch(function(error) {
-      //TODO : Use errorHandler
-      console.log(
-        colors.bgRed.white.bold(error)
-      );
-    })
+    .catch(utils.errorHandler)
     .finally(function() {
       output(colors.bgGreen.white.bold('End of File.\nMCP Out.'));
     })
@@ -86,10 +74,7 @@ function movieThis(movie) {
 
       logMovieData(movie);
     })
-    .catch(function(error) {
-      //TODO: Use errorHandler
-      console.log(colors.bgRed.white.bold(error));
-    })
+    .catch(errorHandler(error))
     .finally(function() {
       output(colors.bgWhite.black.bold('Done.'))
     });

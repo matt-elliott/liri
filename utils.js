@@ -1,6 +1,14 @@
 const moment = require('moment');
 const colors = require('colors/safe');
 
+module.exports.errorHandler = function (error) {
+  if(!error.response) {
+    console.error(colors.bgRed.white.bold(error));
+  } else {
+    console.error(colors.bgRed.white.bold(error.response.data));
+  }
+}
+
 module.exports.logConcertData = function (data) {
   data.forEach(function(datum) {
     var concert = {
