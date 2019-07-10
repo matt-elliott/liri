@@ -10,11 +10,9 @@ const logSongData = utils.logSongData;
 const logMovieData = utils.logMovieData;
 const Spotify = require("node-spotify-api");
 const spotify = new Spotify(keys.spotify);
-// ! Do we really need to define keys like this or are we just making constants for fun now? 
 const omdb = keys.OMDB_KEY;
 const colors = require("colors/safe");
 
-// TODO : use inquirer to prompt user for ansers
 function concertThis(artist) {
   let url = `https://rest.bandsintown.com/artists/${artist}/events?app_id=codingbootcamp`;
 
