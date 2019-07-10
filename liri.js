@@ -8,33 +8,54 @@ const output = utils.output;
 const logConcertData = utils.logConcertData;
 const logSongData = utils.logSongData;
 const logMovieData = utils.logMovieData;
-const Spotify = require("node-spotify-api");
+const Spotify = require('node-spotify-api');
 const spotify = new Spotify(keys.spotify);
 // ! Do we really need to define keys like this or are we just making constants for fun now? 
 const omdb = keys.OMDB_KEY;
-const colors = require("colors/safe");
+const colors = require('colors/safe');
+const inquirer = require('inquirer');
 
-// TODO : use inquirer to prompt user for ansers
-function concertThis(artist) {
-  let url = `https://rest.bandsintown.com/artists/${artist}/events?app_id=codingbootcamp`;
+function concertThis() {
+  let band;
+  
+  inquirer.prompt({
+    type: 'input',
+    message: 'Which artist would you like concert data for?',
+    name: 'artist'
+  })
+  .then(function(res) {
+    if(res.artist) {
+      band = res.artist;
+      getConcert(band);
+    } else {
+      throw 'Nothing Found…'
+    }
+  })
+  .catch(function(error) {
+    utils.errorHandler(error);
+  });
 
-  axios.get(url).then(function(response) {
-      let data = response.data;
+  function getConcert(artist) {
+    let url = `https://rest.bandsintown.com/artists/${artist}/events?app_id=codingbootcamp`;
 
-      if (data.indexOf('Not found') > -1) {
-        throw 'Wanna try and type like a real person?';
-      } else if(data.length === 0) {
-        throw `No Results! I Heard ${artist} has \n ${colors.zebra(
-          "R E T I R E D!"
-        )}`;
-      } else {
-        logConcertData(data);
-      }
-    })
-    .catch(utils.errorHandler)
-    .finally(function() {
-      output(colors.bgGreen.white.bold("√√ complete"));
-    });
+    axios.get(url).then(function(response) {
+        let data = response.data;
+
+        if (data.indexOf('Not found') > -1) {
+          throw 'Wanna try and type like a real person?';
+        } else if(data.length === 0) {
+          throw `No Results! I Heard ${artist} has \n ${colors.zebra(
+            "R E T I R E D!"
+          )}`;
+        } else {
+          logConcertData(data);
+        }
+      })
+      .catch(utils.errorHandler)
+      .finally(function() {
+        output(colors.bgGreen.white.bold("√√ complete"));
+      });
+  }
 }
 
 function spotifyThisSong(song) {
@@ -92,9 +113,8 @@ function doWhatItSays() {
   });
 }
 
-function router(command, paramater) {
+function router(command) {
   let route;
-  let param;
 
   if (command != undefined) {
     route = command;
@@ -104,23 +124,15 @@ function router(command, paramater) {
     route = "do-what-it-says";
   }
 
-  if (paramater != undefined) {
-    param = paramater;
-  } else if (process.argv[3] != undefined) {
-    param = process.argv[3];
-  } else {
-    param = null;
-  }
-
   switch (route) {
     case "concert-this":
-      concertThis(param);
+      concertThis();
       break;
     case "spotify-this-song":
-      spotifyThisSong(param);
+      spotifyThisSong();
       break;
     case "movie-this":
-      movieThis(param);
+      movieThis();
       break;
     case "do-what-it-says":
       doWhatItSays();
