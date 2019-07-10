@@ -14,6 +14,7 @@ const spotify = new Spotify(keys.spotify);
 const omdb = keys.OMDB_KEY;
 const colors = require("colors/safe");
 
+// TODO : use inquirer to prompt user for ansers
 function concertThis(artist) {
   let url = `https://rest.bandsintown.com/artists/${artist}/events?app_id=codingbootcamp`;
 
@@ -37,15 +38,14 @@ function concertThis(artist) {
 }
 
 function spotifyThisSong(song) {
-  let query = song != undefined ? song : "The Sign Ace of Base";
+  let queryString = song != undefined ? song : "The Sign Ace of Base";
 
   spotify
-  .search({ type: "track", query: query, limit: 1 })
+  .search({ type: "track", query: queryString, limit: 1 })
   .then(
-    function(data) {
+    function (data) {
       if (data.tracks.total === 0) {
         throw "No Results Found. Please try again!";
-        return;
       }
 
       logSongData(data.tracks.items);

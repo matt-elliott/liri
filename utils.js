@@ -33,22 +33,21 @@ module.exports.logConcertData = function (data) {
 
 module.exports.logSongData = function(songs) {
   let response = {};
-  let artists = [];
+  let artistsArray = [];
 
   if(songs[0].artists.length > 0) {
     songs[0].artists.forEach(function(artist) {
-      artists.push(artist.name);
+      artistsArray.push(artist.name);
     });
   }
-
   response = {
-    artists: artists.join(', '),
+    artists: artistsArray.join(', '),
     name: songs[0].name,
-    //TODO: Make link clickable from CL? Without special keycombo? Try out: https://www.npmjs.com/package/terminal-link
-    link: songs[0].preview_url,
+    link: songs[0].preview_url != null ?
+      songs[0].preview_url : 'No link available.',
     album: songs[0].album.name
   };
-
+  
   console.log(
     '\n',
     colors.white.bold('Artists : '),
