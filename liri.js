@@ -1,4 +1,3 @@
-// TODO : DEGLOBALIZE!!!! \\
 require("dotenv").config();
 const fs = require("fs");
 const axios = require("axios");
@@ -63,7 +62,6 @@ function movieThis(movie) {
     .then(function(response) {
       let movie = response.data;
 
-      //TODO : Ask Zane why I need to do this, shouldnt these errors be caught?
       if(movie.Title === undefined) {
         throw 'No Movies Matched. Please sober up and try again later.'
       } else if(movie.data != undefined) {
@@ -79,7 +77,6 @@ function movieThis(movie) {
 }
 
 function doWhatItSays() {
-  //TODO : try to use then/catch program flow with fs.readFile
   fs.readFile("./random.txt", "utf-8", function(error, data) {
     if (error) throw error;
     let splitData = data.split(",");
