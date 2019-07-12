@@ -13,6 +13,8 @@ const omdb = keys.OMDB_KEY;
 const colors = require("colors/safe");
 
 function concertThis(artist) {
+  if(artist === null) artist = "Rolling Stones";
+  
   let url = `https://rest.bandsintown.com/artists/${artist}/events?app_id=codingbootcamp`;
 
   axios.get(url).then(function(response) {
