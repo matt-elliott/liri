@@ -7,6 +7,9 @@ Demo video is available [here](https://youtu.be/pNOJx_Nn9uk)
 #### Installation
 Clone source from github and set up your .env.
 
+#### The Build
+This CLI App built with Node.js utilizes multiple media APIs (Spotify, OMDB, Bandsintown Api) to return data matching users search query. Users can search for specific songs on spotify, details on movies, and see if their favorite band is in town: all from the command line!
+
 #### Usage 
 Make a request to Liri using the following syntax:
 ```
